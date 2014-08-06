@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -30,8 +32,17 @@ public class Sirens
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	nuclearSiren = new NuclearWarningSiren(Material.rock);
+    	nuclearSiren = new NuclearWarningSiren(Material.wood);
     	GameRegistry.registerBlock(nuclearSiren, "siren");
+    	
+    	ItemStack jukebox = new ItemStack(Blocks.jukebox);
+    	ItemStack ironBar = new ItemStack(Blocks.iron_bars);
+    	GameRegistry.addRecipe(new ItemStack(nuclearSiren), 
+    			"xyx", 
+    			"yxy", 
+    			"xyx",
+    			'x', ironBar,
+    			'y', jukebox);
     }
     
     @EventHandler

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "sirens",
+  "name": "Minecraft Sirens mod",
+  "description": "Add sirens that can be triggered with redstone",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://www.absalon.is",
+  "updateUrl": "",
+  "authorList": ["XanderDelores"],
+  "credits": "Axel Örn Sigurðsson",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,7 +1,10 @@
 package is.absalon.sirens;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -17,7 +20,7 @@ public class Sirens
     public static final String MODID = "sirens";
     public static final String VERSION = "0.1";
     
-    public static Item nuclearSiren;
+    public static Block nuclearSiren;
     
     @Instance(value = MODID)
     public static Sirens instance;
@@ -27,8 +30,8 @@ public class Sirens
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	nuclearSiren = new NuclearWarningSiren();
-    	GameRegistry.registerItem(nuclearSiren, "siren");
+    	nuclearSiren = new NuclearWarningSiren(Material.rock);
+    	GameRegistry.registerBlock(nuclearSiren, "siren");
     }
     
     @EventHandler
@@ -39,12 +42,5 @@ public class Sirens
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
     	// Stub
-    }
-    
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-		// some example code
-        System.out.println("DIRT BLOCK >> "+Blocks.dirt.getUnlocalizedName());
     }
 }

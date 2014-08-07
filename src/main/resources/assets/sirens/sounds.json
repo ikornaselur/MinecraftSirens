@@ -1,0 +1,9 @@
+{
+    "siren.nuclear": {
+        "category": "master",
+        "sounds": [{
+            "name": "siren/nuclearalarm",
+            "stream": true
+        }]
+    }
+}

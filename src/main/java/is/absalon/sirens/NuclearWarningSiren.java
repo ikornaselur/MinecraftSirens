@@ -3,10 +3,12 @@ package is.absalon.sirens;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockJukebox;
 import net.minecraft.block.BlockNote;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityNote;
@@ -19,7 +21,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class NuclearWarningSiren extends Block {
 	@SideOnly(Side.CLIENT)
 	private IIcon top;
-	private boolean isOn;
+	private final boolean isOn;
+	private boolean isPlaying = false;
 	
 	public NuclearWarningSiren(boolean isOn) {
 		super(Material.wood);
@@ -43,17 +46,20 @@ public class NuclearWarningSiren extends Block {
 	
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister ir) {
-		String sideText = "sirens:nuclearSiren_side_" + (this.isOn ? "on" : "off");
+		String sideText = Sirens.MODID + ":nuclearSiren_side_" + (this.isOn ? "on" : "off");
 		this.blockIcon = ir.registerIcon(sideText);
-		this.top = ir.registerIcon("sirens:nuclearSiren_top");
+		this.top = ir.registerIcon(Sirens.MODID + ":nuclearSiren_top");
 	}
 
 	public void onBlockAdded(World world, int x, int y, int z) {
 		updateBlock(world, x, y, z);
+		if (this.isOn) {
+			world.playSoundEffect((double)x, (double)y, (double)z, Sirens.MODID + ":siren.nuclear", 5f, 0.5f);
+		}
 	}
 	
     public void onNeighborBlockChange(World world, int x, int y, int z, Block _) {
-    	updateBlock(world, x, y, z);    
+    	updateBlock(world, x, y, z);
     }
     
     private void updateBlock(World world, int x, int y, int z) {
@@ -69,8 +75,12 @@ public class NuclearWarningSiren extends Block {
     }
     
     public void updateTick(World world, int x, int y, int z, Random _) {
-    	if (!world.isRemote && this.isOn && !world.isBlockIndirectlyGettingPowered(x, y, z)) {
-    		world.setBlock(x, y, z, Sirens.nuclearSirenOff, 0, 2);
+    	if (world.isRemote) {
+    		return;
+    	}
+    	else if (this.isOn && !world.isBlockIndirectlyGettingPowered(x, y, z)) {
+			this.isPlaying = false;
+			world.setBlock(x, y, z, Sirens.nuclearSirenOff, 0, 2);
     	}
     }
     

@@ -25,7 +25,7 @@ public class NuclearWarningSiren extends Block {
 	private boolean isPlaying = false;
 	
 	public NuclearWarningSiren(boolean isOn) {
-		super(Material.wood);
+		super(Material.iron);
 		this.setHardness(2f);
 		this.setStepSound(Block.soundTypeStone);
 		this.setBlockName("nuclearWarningSiren");
@@ -54,11 +54,11 @@ public class NuclearWarningSiren extends Block {
 	public void onBlockAdded(World world, int x, int y, int z) {
 		updateBlock(world, x, y, z);
 		if (this.isOn) {
-			world.playSoundEffect((double)x, (double)y, (double)z, Sirens.MODID + ":siren.nuclear", 5f, 0.5f);
+			world.playSoundEffect((double)x, (double)y, (double)z, Sirens.MODID + ":siren.nuclear", 10f, 0.75f);
 		}
 	}
 	
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block _) {
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
     	updateBlock(world, x, y, z);
     }
     
@@ -74,7 +74,7 @@ public class NuclearWarningSiren extends Block {
 		}
     }
     
-    public void updateTick(World world, int x, int y, int z, Random _) {
+    public void updateTick(World world, int x, int y, int z, Random random) {
     	if (world.isRemote) {
     		return;
     	}
@@ -84,11 +84,11 @@ public class NuclearWarningSiren extends Block {
     	}
     }
     
-    public Item getItemDropped(int _, Random __, int ___) {
+    public Item getItemDropped(int i, Random random, int j) {
     	return Item.getItemFromBlock(Sirens.nuclearSirenOff);
     }
     
-    public ItemStack createStackedBlock(int _) {
+    public ItemStack createStackedBlock(int i) {
     	return new ItemStack(Sirens.nuclearSirenOff);
     }
 }

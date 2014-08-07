@@ -22,7 +22,8 @@ public class Sirens
     public static final String MODID = "sirens";
     public static final String VERSION = "0.1";
     
-    public static Block nuclearSiren;
+    public static Block nuclearSirenOn;
+    public static Block nuclearSirenOff;
     
     @Instance(value = MODID)
     public static Sirens instance;
@@ -32,12 +33,15 @@ public class Sirens
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-    	nuclearSiren = new NuclearWarningSiren(Material.wood);
-    	GameRegistry.registerBlock(nuclearSiren, "siren");
+    	// Nuclear Warning Siren
+    	nuclearSirenOn = new NuclearWarningSiren(true);
+    	nuclearSirenOff = new NuclearWarningSiren(false);
+    	GameRegistry.registerBlock(nuclearSirenOn, "nuclearSirenOn");
+    	GameRegistry.registerBlock(nuclearSirenOff, "nuclearSirenOff");
     	
     	ItemStack jukebox = new ItemStack(Blocks.jukebox);
     	ItemStack ironBar = new ItemStack(Blocks.iron_bars);
-    	GameRegistry.addRecipe(new ItemStack(nuclearSiren), 
+    	GameRegistry.addRecipe(new ItemStack(nuclearSirenOff), 
     			"xyx", 
     			"yxy", 
     			"xyx",

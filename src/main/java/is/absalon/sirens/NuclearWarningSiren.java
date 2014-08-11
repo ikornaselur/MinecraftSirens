@@ -37,6 +37,11 @@ public class NuclearWarningSiren extends Block {
 	private static SoundManager _soundManager;
 	private static Map _playingSounds;
 	
+	private final boolean isDevEnv = false;
+	private String _soundHandlerFieldName = isDevEnv ? "mcSoundHandler" : "field_147127_av";
+	private String _soundManagerFieldName = isDevEnv ? "sndManager" : "field_147694_f";
+	private String _playingSoundsFieldName = isDevEnv ? "playingSounds" : "field_148629_h";
+	
 	public NuclearWarningSiren(boolean isOn) {
 		super(Material.iron);
 		this.setHardness(2f);
@@ -58,15 +63,15 @@ public class NuclearWarningSiren extends Block {
 		
 		Minecraft mc = Minecraft.getMinecraft();
 		try {
-			Field soundHandlerField = mc.getClass().getDeclaredField("mcSoundHandler");
+			Field soundHandlerField = mc.getClass().getDeclaredField(_soundHandlerFieldName);
 			soundHandlerField.setAccessible(true);
 			SoundHandler soundHandler = (SoundHandler) soundHandlerField.get(mc);
 			
-			Field soundManagerField = soundHandler.getClass().getDeclaredField("sndManager");
+			Field soundManagerField = soundHandler.getClass().getDeclaredField(_soundManagerFieldName);
 			soundManagerField.setAccessible(true);
 			_soundManager = (SoundManager) soundManagerField.get(soundHandler);
 			
-			Field playingSoundsField = _soundManager.getClass().getDeclaredField("playingSounds");
+			Field playingSoundsField = _soundManager.getClass().getDeclaredField(_playingSoundsFieldName);
 			playingSoundsField.setAccessible(true);
 			_playingSounds = (Map) playingSoundsField.get(_soundManager);
 			
